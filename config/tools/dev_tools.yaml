@@ -1,0 +1,58 @@
+code_analyzer:
+  description: "代码分析工具，可以分析代码质量和结构"
+  enabled: true
+  schema:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "要分析的代码"
+      language:
+        type: "string"
+        description: "编程语言"
+      analysis_type:
+        type: "string"
+        enum: ["syntax", "quality", "security"]
+        description: "分析类型"
+    required: ["code", "language"]
+  config:
+    max_file_size: 1048576
+    supported_languages: ["python", "javascript", "java", "cpp"]
+
+git_tools:
+  description: "Git版本控制工具"
+  enabled: true
+  schema:
+    type: "object"
+    properties:
+      command:
+        type: "string"
+        description: "Git命令"
+      repository:
+        type: "string"
+        description: "仓库路径"
+    required: ["command"]
+  config:
+    default_branch: "main"
+    auto_commit: false
+
+file_manager:
+  description: "文件管理工具"
+  enabled: true
+  schema:
+    type: "object"
+    properties:
+      operation:
+        type: "string"
+        enum: ["read", "write", "delete", "list"]
+        description: "文件操作类型"
+      path:
+        type: "string"
+        description: "文件路径"
+      content:
+        type: "string"
+        description: "文件内容（写入时使用）"
+    required: ["operation", "path"]
+  config:
+    max_file_size: 10485760
+    allowed_extensions: [".txt", ".md", ".py", ".js", ".yaml", ".json"] 

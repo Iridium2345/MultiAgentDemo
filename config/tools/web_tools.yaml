@@ -1,0 +1,35 @@
+web_search:
+  description: "网络搜索工具，可以搜索互联网信息"
+  enabled: true
+  schema:
+    type: "object"
+    properties:
+      query:
+        type: "string"
+        description: "搜索查询"
+      max_results:
+        type: "integer"
+        description: "最大结果数量"
+        default: 10
+    required: ["query"]
+  config:
+    api_key: "${SEARCH_API_KEY}"
+    endpoint: "https://api.search.example.com"
+    timeout: 30
+
+url_fetcher:
+  description: "URL内容获取工具"
+  enabled: true
+  schema:
+    type: "object"
+    properties:
+      url:
+        type: "string"
+        description: "要获取的URL"
+      headers:
+        type: "object"
+        description: "HTTP请求头"
+    required: ["url"]
+  config:
+    user_agent: "Mozilla/5.0"
+    timeout: 15 
