@@ -1,0 +1,11 @@
+description: "编程文档和API参考"
+type: "elasticsearch"
+connection_info:
+  host: "localhost"
+  port: 9200
+  index: "programming_docs"
+  username: "${ES_USERNAME}"
+  password: "${ES_PASSWORD}"
+metadata:
+  last_updated: "2024-01-01"
+  document_count: 50000 

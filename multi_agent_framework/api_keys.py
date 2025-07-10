@@ -4,11 +4,13 @@ class ApiKey:
     __type:str
     __key:str
     __name:str
+    __base_url:str
     
-    def __init__(self,name:str,type:str,key:str,**_kwargs:str) -> None:
+    def __init__(self,name:str,type:str,key:str,base_url:str="",**_kwargs:str) -> None:
         self.__type = type
         self.__key = key
         self.__name = name
+        self.__base_url = base_url
     
     @property
     def type(self) -> str: 
@@ -22,8 +24,12 @@ class ApiKey:
     def name(self) -> str:
         return self.__name
     
+    @property
+    def base_url(self) -> str:
+        return self.__base_url
+    
     def __str__(self) -> str:
-        return f"{self.__name}: type={self.__type} key={self.__key}"
+        return f"{self.__name}: type={self.__type} key={self.__key} base_url={self.__base_url}"
     
     
 class ApiKeys:    

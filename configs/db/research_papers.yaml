@@ -1,0 +1,11 @@
+description: "研究论文知识库"
+type: "vector_db"
+connection_info:
+  host: "localhost"
+  port: 6334
+  collection_name: "research_papers"
+  api_key: "${QDRANT_API_KEY}"
+metadata:
+  last_updated: "2024-01-01"
+  document_count: 100000
+  embedding_model: "text-embedding-ada-002" 

@@ -1,0 +1,14 @@
+description: "测试用例子"
+model_config:
+  provider: "DeepSeek"
+  model: "deepseek-chat"
+  temperature: 0.5
+  max_tokens: 4096
+memory:
+  type: "chroma"
+  enabled: false
+  url: "http://localhost:8000"
+tools:
+  - "example"
+knowledge_bases: []
+system_prompt: "你是一个测试用例子，请根据用户的问题给出回答。如果你需要进行学术搜索，请使用可用的工具。"

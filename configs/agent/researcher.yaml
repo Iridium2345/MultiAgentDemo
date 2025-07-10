@@ -1,0 +1,18 @@
+description: "研究助手代理，擅长学术和技术研究"
+model_config:
+  provider: "openai"
+  model: "gpt-4"
+  temperature: 0.5
+  max_tokens: 4096
+memory:
+  type: "chroma"
+  enabled: true
+  url: "http://localhost:8000"
+tools:
+  - academic_search
+  - web_search
+  - url_fetcher
+knowledge_bases:
+  - research_papers
+  - general_knowledge
+system_prompt: "你是一个专业的研究助手，能够帮助用户进行学术研究和技术调研。" 

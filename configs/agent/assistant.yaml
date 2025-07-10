@@ -1,0 +1,17 @@
+description: "通用助手代理，擅长一般问题解答"
+model_config:
+  provider: "openai"
+  model: "gpt-3.5-turbo"
+  temperature: 0.7
+  max_tokens: 2048
+memory:
+  type: "chroma"
+  enabled: true
+  url: "http://localhost:8000"
+tools:
+  - web_search
+  - url_fetcher
+knowledge_bases:
+  - general_knowledge
+  - faq
+system_prompt: "你是一个友好的助手，能够帮助用户解答各种问题。" 

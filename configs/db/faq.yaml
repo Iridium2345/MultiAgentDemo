@@ -1,0 +1,8 @@
+description: "常见问题知识库"
+type: "document_db"
+connection_info:
+  database_path: "./data/faq.db"
+  table_name: "faq_items"
+metadata:
+  last_updated: "2024-01-01"
+  document_count: 500 

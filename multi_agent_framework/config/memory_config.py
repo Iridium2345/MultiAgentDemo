@@ -1,3 +1,8 @@
+"""
+记忆配置模块
+包含记忆库相关的配置类
+"""
+
 from typing import Any
 from enum import Enum
 
@@ -36,6 +41,4 @@ class MemoryConfig:
         return self.__url
     
     def __str__(self) -> str:
-        return f"MemoryConfig(enable={self.__enable}, type={self.__type.value}, url={self.__url})"
-
- 
+        return f"MemoryConfig(enable={self.__enable}, type={self.__type.value}, url={self.__url})" 

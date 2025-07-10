@@ -1,0 +1,14 @@
+description: "Git版本控制工具"
+schema:
+  type: "object"
+  properties:
+    command:
+      type: "string"
+      description: "Git命令"
+    repository:
+      type: "string"
+      description: "仓库路径"
+  required: ["command"]
+config:
+  default_branch: "main"
+  auto_commit: false 

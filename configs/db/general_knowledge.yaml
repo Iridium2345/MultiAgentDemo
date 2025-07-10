@@ -1,0 +1,11 @@
+description: "通用知识库，包含常见问题和答案"
+type: "vector_db"
+connection_info:
+  host: "localhost"
+  port: 6333
+  collection_name: "general_knowledge"
+  api_key: "${QDRANT_API_KEY}"
+metadata:
+  last_updated: "2024-01-01"
+  document_count: 10000
+  embedding_model: "text-embedding-ada-002" 

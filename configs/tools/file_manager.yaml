@@ -1,0 +1,18 @@
+description: "文件管理工具"
+schema:
+  type: "object"
+  properties:
+    operation:
+      type: "string"
+      enum: ["read", "write", "delete", "list"]
+      description: "文件操作类型"
+    path:
+      type: "string"
+      description: "文件路径"
+    content:
+      type: "string"
+      description: "文件内容（写入时使用）"
+  required: ["operation", "path"]
+config:
+  max_file_size: 10485760
+  allowed_extensions: [".txt", ".md", ".py", ".js", ".yaml", ".json"] 

@@ -1,0 +1,24 @@
+description: "学术论文搜索工具"
+py_plugin: examples.example_tool:academic_search
+schema:
+  type: "object"
+  properties:
+    query:
+      type: "string"
+      description: "学术搜索查询"
+    field:
+      type: "string"
+      description: "学科领域"
+    year_range:
+      type: "object"
+      properties:
+        start:
+          type: "integer"
+        end:
+          type: "integer"
+      description: "年份范围"
+  required: ["query"]
+config:
+  api_key: "${ACADEMIC_API_KEY}"
+  endpoint: "https://api.academic.example.com"
+  max_results: 20 

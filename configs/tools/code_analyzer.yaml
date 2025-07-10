@@ -1,0 +1,18 @@
+description: "代码分析工具，可以分析代码质量和结构"
+schema:
+  type: "object"
+  properties:
+    code:
+      type: "string"
+      description: "要分析的代码"
+    language:
+      type: "string"
+      description: "编程语言"
+    analysis_type:
+      type: "string"
+      enum: ["syntax", "quality", "security"]
+      description: "分析类型"
+  required: ["code", "language"]
+config:
+  max_file_size: 1048576
+  supported_languages: ["python", "javascript", "java", "cpp"] 

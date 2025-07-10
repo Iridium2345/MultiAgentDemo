@@ -1,0 +1,7 @@
+config: configs/agent/example.yaml
+history:
+- content: 你好，请介绍一下自己
+  role: user
+- content: 我是 example，我收到了您的消息：你好，请介绍一下自己
+  role: assistant
+model: {}

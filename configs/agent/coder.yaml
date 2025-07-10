@@ -1,0 +1,18 @@
+description: "编程助手代理，擅长代码编写和分析"
+model_config:
+  provider: "openai"
+  model: "gpt-4"
+  temperature: 0.3
+  max_tokens: 4096
+memory:
+  type: "chroma"
+  enabled: true
+  url: "http://localhost:8000"
+tools:
+  - code_analyzer
+  - git_tools
+  - file_manager
+knowledge_bases:
+  - programming_docs
+  - code_examples
+system_prompt: "你是一个专业的编程助手，能够帮助用户编写、分析和优化代码。" 

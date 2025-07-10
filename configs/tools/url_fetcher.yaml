@@ -1,0 +1,14 @@
+description: "URL内容获取工具"
+schema:
+  type: "object"
+  properties:
+    url:
+      type: "string"
+      description: "要获取的URL"
+    headers:
+      type: "object"
+      description: "HTTP请求头"
+  required: ["url"]
+config:
+  user_agent: "Mozilla/5.0"
+  timeout: 15 

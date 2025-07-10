@@ -1,0 +1,16 @@
+description: "网络搜索工具，可以搜索互联网信息"
+schema:
+  type: "object"
+  properties:
+    query:
+      type: "string"
+      description: "搜索查询"
+    max_results:
+      type: "integer"
+      description: "最大结果数量"
+      default: 10
+  required: ["query"]
+config:
+  api_key: "${SEARCH_API_KEY}"
+  endpoint: "https://api.search.example.com"
+  timeout: 30 
