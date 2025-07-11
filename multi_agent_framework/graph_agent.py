@@ -13,6 +13,7 @@ from langgraph.graph import END, StateGraph
 from .api_keys import ApiKeys
 from .config.loader import load_agent_config
 from .tool_manager import ToolManager
+from .knowledge_manager import KnowledgeManager
 
 # 初始化日志记录器
 logger = logging.getLogger(__name__)
@@ -54,12 +55,41 @@ class GraphAgent:
         tool_config_paths = [f"configs/tools/{name}.yaml" for name in self.config.tools]
         self.tool_manager = ToolManager(tool_config_paths)
         
+        # 初始化知识库管理器
+        self.knowledge_manager = KnowledgeManager()
+        self._init_knowledge_bases()
+        
         # 初始化聊天模型并绑定工具
         self.llm = self._init_chat_model()
         
         # 构建并编译图
         self.graph = self._build_graph()
         logger.info("GraphAgent 初始化完成。")
+
+    def _init_knowledge_bases(self) -> None:
+        """初始化知识库"""
+        if not self.config.knowledge_bases:
+            logger.info("未配置知识库")
+            return
+        
+        logger.info(f"正在初始化 {len(self.config.knowledge_bases)} 个知识库...")
+        
+        for kb_name in self.config.knowledge_bases:
+            try:
+                # 加载知识库配置
+                kb_config_path = f"configs/knowledge_bases/{kb_name}.yaml"
+                from .config.loader import load_knowledge_config
+                kb_config = load_knowledge_config(kb_config_path)
+                
+                # 添加到知识库管理器
+                success = self.knowledge_manager.add_knowledge_base(kb_name, kb_config)
+                if success:
+                    logger.info(f"成功加载知识库: {kb_name}")
+                else:
+                    logger.warning(f"加载知识库失败: {kb_name}")
+                    
+            except Exception as e:
+                logger.error(f"初始化知识库 {kb_name} 时出错: {e}")
 
     def _init_chat_model(self) -> Any:
         """根据配置文件初始化并返回一个 ChatOpenAI 实例。"""
@@ -128,6 +158,37 @@ class GraphAgent:
         response_message = AIMessage(content=f"基于工具调用的结果:\n{combined_result}\n\n让我为您总结一下这些信息。")
         
         return {"messages": [response_message]}
+    
+    def _knowledge_search_node(self, state: AgentState) -> Dict[str, Any]:
+        """知识库搜索节点"""
+        logger.debug("调用 Knowledge Search 节点...")
+        
+        # 从最后一条消息中提取查询
+        last_message = state['messages'][-1]
+        if isinstance(last_message, HumanMessage):
+            query = last_message.content
+        else:
+            query = str(last_message.content)
+        
+        # 搜索所有知识库
+        all_results = self.knowledge_manager.search_all(query, top_k=3)
+        
+        # 整理搜索结果
+        if not all_results or not any(results for results in all_results.values()):
+            knowledge_content = "在知识库中没有找到相关信息。"
+        else:
+            knowledge_parts = []
+            for kb_name, results in all_results.items():
+                if results:
+                    knowledge_parts.append(f"来自知识库 {kb_name}:")
+                    for result in results:
+                        knowledge_parts.append(f"- {result.item.title or result.item.id}: {result.item.content[:200]}...")
+            knowledge_content = "\n".join(knowledge_parts)
+        
+        # 创建包含知识库信息的消息
+        knowledge_message = AIMessage(content=f"从知识库中找到的相关信息:\n{knowledge_content}")
+        
+        return {"messages": [knowledge_message]}
 
     def _router(self, state: AgentState) -> str:
         """决定下一步走向的路由器。"""

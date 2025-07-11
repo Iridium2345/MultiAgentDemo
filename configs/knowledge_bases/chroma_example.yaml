@@ -1,0 +1,16 @@
+name: "chroma_knowledge_base"
+description: "基于 Chroma 的向量知识库"
+type: "chroma"
+enable: true
+connection_info:
+  collection_name: "knowledge_base"
+  persist_directory: "./data/chroma_db"
+  # 可选：连接到远程 Chroma 服务器
+  # host: "localhost"
+  # port: 8000
+  # 可选：自定义嵌入函数
+  # embedding_function: null
+metadata:
+  version: "1.0"
+  created_by: "multi_agent_framework"
+  purpose: "存储和检索知识库内容" 

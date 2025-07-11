@@ -5,7 +5,7 @@
 import logging
 import yaml
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from .agent_config import AgentConfig
 from .knowledge_config import KnowledgeBaseConfig
@@ -104,4 +104,30 @@ def load_memory_config(file_path:str) -> MemoryConfig:
     
     _memory_config_cache[file_path] = memory_config
     logger.info(f"内存配置 '{memory_config.type}' 已加载并缓存。")
-    return memory_config 
+    return memory_config
+
+
+def load_knowledge_base_configs(config_dir: str) -> List[KnowledgeBaseConfig]:
+    """
+    从目录加载所有知识库配置
+    
+    Args:
+        config_dir: 配置目录路径
+        
+    Returns:
+        知识库配置列表
+    """
+    configs: List[KnowledgeBaseConfig] = []
+    config_path = Path(config_dir)
+    
+    if not config_path.exists():
+        return configs
+    
+    for config_file in config_path.glob("*.yaml"):
+        try:
+            config = load_knowledge_config(str(config_file))
+            configs.append(config)
+        except Exception as e:
+            logger.error(f"加载知识库配置失败 {config_file}: {e}")
+    
+    return configs 

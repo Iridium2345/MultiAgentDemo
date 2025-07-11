@@ -4,19 +4,23 @@
 """
 
 from typing import Any, Optional
+from ..knowledge_base import KnowledgeType
 
 class KnowledgeBaseConfig:
     """知识库配置类"""
     __name: str
     __description: str
-    __type: str
+    __type: KnowledgeType
+    __enable: bool
     __connection_info: dict[str, Any]
     __metadata: dict[str, Any]
     
-    def __init__(self, name: str, description: str = "", type: str = "", connection_info: Optional[dict[str, Any]] = None, metadata: Optional[dict[str, Any]] = None, **_kwargs: Any) -> None:
+    def __init__(self, name: str, description: str = "", type: str = "chroma", enable: bool = True, 
+                 connection_info: Optional[dict[str, Any]] = None, metadata: Optional[dict[str, Any]] = None, **_kwargs: Any) -> None:
         self.__name = name
         self.__description = description
-        self.__type = type
+        self.__type = KnowledgeType.from_string(type)
+        self.__enable = enable
         self.__connection_info = connection_info or {}
         self.__metadata = metadata or {}
     
@@ -29,8 +33,12 @@ class KnowledgeBaseConfig:
         return self.__description
     
     @property
-    def type(self) -> str:
+    def type(self) -> KnowledgeType:
         return self.__type
+    
+    @property
+    def enable(self) -> bool:
+        return self.__enable
     
     @property
     def connection_info(self) -> dict[str, Any]:
@@ -41,4 +49,4 @@ class KnowledgeBaseConfig:
         return self.__metadata.copy()
     
     def __str__(self) -> str:
-        return f"{self.__name}: {self.__description} (type={self.__type})" 
+        return f"KnowledgeBaseConfig(name={self.__name}, type={self.__type.value}, enable={self.__enable})" 
